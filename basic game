@@ -30,7 +30,7 @@ def pokemon_data(pokemon_name):
 #Creating a card deck with 30 cards
 card_deck = 30
 
-#Per API documentation there are 1010 pokemons so we wont to get them all
+#Per API documentation there are 1010 pokemons so we want to get them all
 catch_them_all = range(1,1011) # this is to inlcude 1010
 
 #Now with all the pokemon caught and a deck of cards of 30, they need to be put together
