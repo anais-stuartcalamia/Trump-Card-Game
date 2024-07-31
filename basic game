@@ -1,0 +1,113 @@
+import random
+#import random to help with choosing random cards during the game
+import requests
+#requests is to get the api information for the website
+
+print('Welcome to the Pokemon top trump card')
+
+#Check  that the URL will respond when asking for the information by looking at which code will come up
+#Using a function for a clearer code -the function will include the url check and then getting the data from API
+def pokemon_data(pokemon_name):
+    #API URL to get data about specific pokemon form the website POKEAIPI
+    url_api= f"https://pokeapi.co/api/v2/pokemon/{pokemon_name}/"
+    response = requests.get(url_api)
+    if response.status_code == 200:
+        #getting the data as a text base response
+        data = response.json()
+        #Using a dictionarry to get the data needed such as basic statistics that will used during the game
+        pokemon_dict = {
+            'name': data['name'],
+            'id': data['id'],
+            'height': data['height'],
+            'weight': data['weight'],
+        }
+        return pokemon_dict
+    else:
+        print(f"Error: Could not fetch data for Pokémon ID {pokemon_name}")
+        #error handling
+        return None
+
+#Creating a card deck with 30 cards
+card_deck = 30
+
+#Per API documentation there are 1010 pokemons so we wont to get them all
+catch_them_all = range(1,1011) # this is to inlcude 1010
+
+#Now with all the pokemon caught and a deck of cards of 30, they need to be put together
+# Generating a list of 30 random pokemon
+random_cards = random.sample(catch_them_all,card_deck)
+
+#Creating an empty list for the cards
+pokemon_deck = []
+
+#Getting the data needed and adding it the deck
+for pokemon_name in random_cards:
+    pokemon = pokemon_data(pokemon_name)
+    if pokemon:
+        pokemon_deck.append(pokemon)
+#shuffle deck
+random.shuffle(pokemon_deck)
+
+#For now using just two player - Computer and User so need to distribute the 30 cards to each one
+half_deck = len(pokemon_deck)// 2 #floor division to get a round number
+players_hands = {
+    'user':pokemon_deck[:half_deck],
+    'computer':pokemon_deck[half_deck:]
+}
+
+#Game loop using with both user and comptuer having cards and once one of them does not have cards it will stop
+while players_hands['user'] and players_hands['computer']:
+    print('\n **** New Round ****')
+
+    # Asking the user which stat they want to use as comparison
+    stat_choice = {'1': 'id', '2': 'height', '3': 'weight'}
+    print('Chose which stat you would like to compare:')
+    print('1: ID')
+    print('2: Height')
+    print('3: Weight')
+    #error handling with while loop
+    while True:
+        try:
+            choice = input('Enter the number corresponding to your choice').strip()
+            if choice in stat_choice:
+                user_choice = stat_choice[choice]
+                break
+            else:
+                raise ValueError('Invalid input: Please enter: 1,2 or 3')
+        except ValueError as e:
+            print(e)
+
+    #Drwing a card for each player: if else statement to check if each player still has a card
+    #the pop.(0) will use the card at the top of the deck to be played
+    player_card = players_hands['user'].pop(0) if players_hands['user'] else None
+    computer_card = players_hands['computer'].pop(0) if players_hands['computer'] else None
+
+    #Showing the cards selected to the player
+    if player_card and computer_card:
+        print(f'\n Player\'s card:')
+        print(f'Name: {player_card['name']}, {user_choice}:{player_card[user_choice]}')
+
+        print(f'\nComputer\'s card:')
+        print(f'Name: {computer_card['name']}, {user_choice}: {computer_card[user_choice]}')
+
+        #Comparing the statistics
+        if player_card[user_choice] > computer_card[user_choice]:
+            print('\nYou have won this round!')
+            players_hands['user'].append(player_card)
+            players_hands['user'].append(computer_card)
+        elif player_card[user_choice] < computer_card[user_choice]:
+            print('Computer wins  this round.')
+            players_hands['computer'].append(player_card)
+            players_hands['computer'].append(computer_card)
+        else:
+            print('\nIt\'s a tie.')
+            players_hands['user'].append(player_card)
+            players_hands['computer'].append(computer_card)
+    else:
+        break
+
+#looking at who is the winner
+if len(players_hands['user'])> len(players_hands['computer']):
+    print('\nYou win!! Well Done, you are the new champion!')
+else:
+    print('\nThe computer wins. Better luck next time!')
