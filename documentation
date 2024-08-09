@@ -1,0 +1,65 @@
+Top trump card game:
+=> Yu-Gi-Oh for now maybe pokemon we shall see
+
+Official Game rules: https://toptrumps.com/pages/how-to-play-top-trumps 
+
+Instructions:
+Objective:
+	The goal of Top Trumps is to win the most rounds by having the highest-scoring card in each round.
+Setup:
+Choose a Top Trumps deck based on your interests; each deck features a unique theme.
+Shuffle the deck and deal the entire deck of cards evenly among all players.
+Gameplay:
+Each player holds their cards facing down, and the player to the dealer's left goes first.
+On their turn, a player selects a category from their top card (e.g., speed, strength, intelligence).
+Other players then reveal the same category from their top cards.
+The player with the highest value in that category wins the round and collects all the played cards.
+The player who won the previous round starts the next round by choosing a new category.
+Winning:
+The game continues until one player has all the cards or until a predetermined number of rounds is played.
+The player with the most cards at the end is declared the Top Trumps champion!
+
+What to include:
+=> 30 cards in the games 
+=> Theme: Yu-Gi-Oh / Pokemon
+=> How many players? One will be the computer, four is the maximum (ask how many CPUs and how many humans?) 
+=> Ask for names (later on have option to change names + see scoreboard)
+=> keep track of scores, scoreboard ( on a separate file)
+=> Ask what category the player wants to play at the beginning of each game (later on to make it more challenging to play the game, maybe look at how to change the category after each player has had their turn and let the winner choose the category - random if the CPU wins)
+How to shuffle the cards with python:
+https://www.geeksforgeeks.org/shuffle-a-deck-of-card-with-oops-in-python/  
+
+Blabla:
+30 cards need to be distributed to players (at least two)
+Card / number player 
+
+Random 30 cards from api - random.randint(0,30)
+Game stops when one player has all 30 cards
+Start with 2 players first - User and Computer 
+
+Basic Game:
+Generate random card for the player and CPU
+Show which card they have 
+Ask Player which category they would like to choose 
+Compare card
+Display score 
+
+Next:
+Create menu
+Create scoreboard with access to it
+Ask player when they want to change their name
+Ask how many players?
+Add an option to end game sooner instead of waiting for all the cards to be won 
+Bibliography:
+API: 
+	https://realpython.com/api-integration-in-python/ 
+https://rapidapi.com/blog/how-to-use-an-api-with-python/
+Radom:
+	https://www.geeksforgeeks.org/python-random-sample-function/ 
+
+Code:
+
+API URL ttps://pokeapi.co/api/v2/pokemon/
+https://pokeapi.co/api/v2/pokemon/ditto 
+name, id, height, and weight = easy to  get  
+stats is a list of dictionaries = would maybe need a for loop to get that data 
